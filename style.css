@@ -1,0 +1,231 @@
+/* === AXOLOTL MUSIC NAVBAR === */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #000000;
+}
+
+/* Barra general (más compacta) */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #20001f 10%, #5a005a 60%, #3b003b 100%);
+    padding: 6px 22px; /* menos espacio vertical y horizontal */
+    height: 50px; /* ligero ajuste para que el logo respire */
+    border-radius: 0 25px 25px 0;
+    box-shadow: inset 0 -4px 0 0 #ff4db8; /* línea fucsia inferior */
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 38px;
+    height: 38px;
+    display: block;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 13px;
+    line-height: 14px;
+    color: #ff66cc;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Enlaces */
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    position: relative;
+    margin: 0 12px; /* menos separación entre items */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #f3e9ff;
+    font-size: 13px; /* fuente ligeramente más pequeña */
+    transition: color 0.15s ease-in-out, transform 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 4px;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Empujar elemento específico (NOSOTROS) a la derecha */
+.nav-links .push-right {
+    margin-left: auto;
+}
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #2a002e;
+    top: 56px; /* colocado justo debajo de la barra */
+    left: 0;
+    min-width: 120px;
+    border-radius: 5px;
+    padding: 4px 0;
+    z-index: 1;
+}
+
+.dropdown-content li {
+    padding: 4px 8px;
+}
+
+.dropdown-content a {
+    color: #fff;
+    font-size: 12px;
+    display: block;
+    width: 100%;
+}
+
+/* Mostrar menú al pasar o cuando está activo */
+.dropdown:hover .dropdown-content,
+.dropdown.active .dropdown-content {
+    display: block;
+}
+
+/* Estilos para la sección de novedades y tarjeta interactiva */
+.novedades-section { padding: 20px 0 40px 0; background: linear-gradient(180deg, rgba(90,0,90,0.05), transparent 60%); }
+.section-title { color: #fff; font-size: 28px; margin: 0 0 12px 12px; }
+.novedades-grid { max-width: 1100px; margin: 0 auto; padding: 0 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; align-items: start; }
+.novedad-card { position: relative; overflow: hidden; border-radius: 2px; box-shadow: 0 2px 0 rgba(0,0,0,0.4); cursor: pointer; }
+.novedad-card img { width: 100%; height: auto; display: block; transition: transform 0.3s ease, filter 0.3s ease; }
+.novedad-card:hover img { transform: scale(1.02); filter: brightness(1.02) saturate(1.05); }
+.novedad-overlay { position: absolute; left: 12px; bottom: 12px; background: rgba(255,77,184,0.95); color: #fff; padding: 6px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; }
+
+/* Hero principal */
+.hero {
+    background: linear-gradient(180deg, rgba(90,0,90,0.95), #d81bd6);
+    color: #fff;
+    padding: 36px 12px 28px 12px;
+    text-align: center;
+}
+
+.hero-title {
+    margin: 12px 0 6px 0;
+    font-size: 64px;
+    letter-spacing: 4px;
+    color: #ff1fb3;
+}
+
+.hero-sub {
+    margin: 0;
+    font-size: 13px;
+    color: #ffd6f5;
+}
+
+.novedades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.novedad-card {
+    position: relative;
+    background: #fff0fa; 
+    border-radius: 12px;
+    overflow: hidden;
+    height: 250px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.novedad-card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.novedad-card:hover {
+    transform: scale(1.03);
+}
+
+.novedad-overlay {
+    position: relative;
+    background: rgba(255,102,204,0.8); 
+    color: #fff;
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 1;
+}
+
+
+.modal { display: none; }
+.modal {
+    display: none;
+}
+
+.modal.open {
+    display: block;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #111;
+    color: #fff;
+    border-radius: 6px;
+    padding: 18px;
+    max-width: 720px;
+    width: calc(100% - 40px);
+    z-index: 1001;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+}
+
+.modal-content img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+
+
+.modal-close {
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    background: transparent;
+    color: #fff;
+    border: 0;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+

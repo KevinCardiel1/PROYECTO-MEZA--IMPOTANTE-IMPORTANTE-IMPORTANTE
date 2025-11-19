@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Ver Artistas{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center" style="color: #4a148c;">Lista de Artistas</h2>
+<div class="table-responsive">
+    <table class="table table-hover table-sm shadow-sm" style="background-color: #ffffff; border-radius: 10px; overflow: hidden;">
+        <thead style="background-color: #d1c4e9; color: #4a148c;">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre del Artista</th>
+                <th scope="col">Descripción</th>
+                <th scope="col" class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for artista in artistas %}
+            <tr>
+                <th scope="row">{{ artista.id }}</th>
+                <td>{{ artista.nombre_artista }}</td>
+                <td>{{ artista.descripcion }}</td>
+                <td class="text-center">
+                    <a href="{% url 'actualizar_artistas' artista.id %}" class="btn btn-editar btn-sm-custom" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'borrar_artistas' artista.id %}" class="btn btn-borrar btn-sm-custom" title="Borrar">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No hay artistas registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="text-center mt-4">
+    <a href="{% url 'agregar_artistas' %}" class="btn btn-primary" style="background-color: #6a1b9a; border-color: #6a1b9a;">Agregar Nuevo Artista</a>
+</div>
+{% endblock %}

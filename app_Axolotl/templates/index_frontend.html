@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AXOLOTL MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* Mantén los estilos específicos de esta página aquí o en style.css */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #e60991, #000000); 
+            color: #ffffff;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin: 0;
+            line-height: 1.2;
+            color: #ff66cc; 
+            text-transform: uppercase;
+        }
+
+        .hero-sub {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #ffffff; 
+        }
+
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'index_frontend' %}" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+                <img src="{% static 'vinyl.png' %}" alt="Logo AXOLOTL MUSIC">
+                <h1 style="margin: 0; font-size: 13px; line-height: 14px; color: #ff66cc; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;">
+                    AXOLOTL<br>MUSIC
+                </h1>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'artistas_frontend' %}">ARTISTAS</a></li>
+            <li class="dropdown">
+                <a href="">GÉNEROS ▾</a>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'genero_frontend' %}?genero=Pop">Pop</a></li>
+                    <li><a href="{% url 'genero_frontend' %}?genero=K-Pop">K-Pop</a></li>
+                    <li><a href="{% url 'genero_frontend' %}?genero=Rock">Rock</a></li>
+                    <li><a href="{% url 'genero_frontend' %}?genero=Latina">Latina</a></li>
+                </ul>
+            </li>
+            <li><a href="{% url 'novedades_frontend' %}">NOVEDADES</a></li>
+            <li class="dropdown">
+                <a href="">MÚSICA ▾</a>
+                <ul class="dropdown-content">
+                    <li><a href="#">Vinilos</a></li> {# TODO: Enlazar a vista de tipo de música #}
+                    <li><a href="#">CDs</a></li>
+                    <li><a href="#">Casetes</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <h2 class="hero-title">AXOLOTL<br>MUSIC</h2>
+        <p class="hero-sub">TIENDA ONLINE DE VINILOS, CDS Y CASSETTE</p>
+    </section>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    
+    dropdowns.forEach(dropdown => {
+        const dropdownLink = dropdown.querySelector('a');
+        dropdownLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(d => d.classList.remove('active'));
+        }
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Finalizar Compra - AXOLOTL MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* Mantén los estilos específicos de esta página aquí o en style.css */
+        body { background: #ffdff3; color: #2b0030; font-family: Arial, sans-serif; margin: 0; }
+        .finalizar-container {
+            max-width: 600px; margin: 40px auto; padding: 30px;
+            background: #fff0fa; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 { text-align: center; color: #c51a8d; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        input, select, textarea {
+            width: 100%; padding: 10px; margin-top: 4px; border-radius: 8px; border: 2px solid #c51a8d; background: #fff;
+            box-sizing: border-box;
+        }
+        .btn {
+            padding: 10px 24px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover { filter: brightness(1.05); }
+        .btn.confirmar { background: linear-gradient(90deg, #5a005a, #c51a8d); color:#fff; }
+        .btn.cancelar { background: #c51a8d; color:#fff; }
+        .resumen { text-align: center; margin-bottom: 20px; background: #fff; border-radius: 10px; padding: 10px; }
+        .campo-pago { margin-top: 12px; padding: 12px; background: #fff; border-radius: 10px; border: 1px dashed #e0a4d1; }
+        .oculto { display: none; }
+        .mensaje { text-align: center; padding: 16px; border-radius: 10px; margin-top: 12px; }
+        .mensaje.exito { background: linear-gradient(90deg,#dff6e9,#eafff3); color: #0a6b3a; border: 2px solid #a6e3bf; }
+        .fila-peq { display:flex; gap:8px; }
+        .fila-peq input { flex:1; }
+        small { color:#7a007a; display:block; margin-top:6px; }
+        .volver-btn {
+            display:inline-block; margin-top:12px; padding:10px 16px; border-radius:12px;
+            background: #c51a8d; color:#fff; text-decoration:none; font-weight:600;
+        }
+    </style>
+</head>
+<body>
+<div class="finalizar-container" id="contenedor">
+    <h2>Finalizar Compra</h2>
+    <div class="resumen">
+        <p><b>Artista:</b> <span id="res-artista">{{ artista|default:"—" }}</span></p>
+        <p><b>Producto:</b> <span id="res-producto">{{ producto|default:"—" }}</span></p>
+        <p><b>Precio:</b> <span id="res-precio">{{ precio|default:"—" }}</span> MXN</p>
+    </div>
+
+    <form id="form-compra" novalidate>
+        {% csrf_token %} {# Es buena práctica incluirlo incluso si no hay POST a Django #}
+        <label for="nombre">Nombre completo:</label>
+        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre (opcional)">
+
+        <label for="direccion">Dirección de envío:</label>
+        <textarea id="direccion" name="direccion" rows="3" placeholder="Dirección (opcional)"></textarea>
+
+        <label for="email">Correo electrónico:</label>
+        <input id="email" name="email" type="email" placeholder="correo@ejemplo.com (opcional)">
+
+        <label for="metodo">Método de pago:</label>
+        <select id="metodo" name="metodo">
+            <option value="">Seleccionar...</option>
+            <option value="tarjeta">Tarjeta de crédito / débito</option>
+            <option value="paypal">PayPal</option>
+            <option value="deposito">Depósito bancario</option>
+        </select>
+
+        <!-- Sección: Tarjeta -->
+        <div id="seccion-tarjeta" class="campo-pago oculto" aria-hidden="true">
+            <label for="tarjeta-num">Número de tarjeta (ficticio):</label>
+            <input id="tarjeta-num" name="tarjeta-num" type="text" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456">
+
+            <div class="fila-peq">
+                <div style="flex:1">
+                    <label for="tarjeta-nombre">Nombre en tarjeta:</label>
+                    <input id="tarjeta-nombre" name="tarjeta-nombre" type="text" placeholder="NOMBRE APELLIDO">
+                </div>
+                <div style="width:120px">
+                    <label for="tarjeta-cvv">CVV:</label>
+                    <input id="tarjeta-cvv" name="tarjeta-cvv" type="text" maxlength="4" inputmode="numeric" placeholder="123">
+                </div>
+            </div>
+
+            <div class="fila-peq">
+                <div style="flex:1">
+                    <label for="tarjeta-exp">Fecha expiración (MM/AA):</label>
+                    <input id="tarjeta-exp" name="tarjeta-exp" type="text" maxlength="5" placeholder="08/27">
+                </div>
+                <div style="width:120px">
+                    <label for="tarjeta-tipo">Tipo:</label>
+                    <select id="tarjeta-tipo" name="tarjeta-tipo">
+                        <option value="">—</option>
+                        <option>Visa</option>
+                        <option>Mastercard</option>
+                        <option>American Express</option>
+                    </select>
+                </div>
+            </div>
+
+            <small>Datos ficticios — solo demostración.</small>
+        </div>
+
+        <!-- Sección: PayPal -->
+        <div id="seccion-paypal" class="campo-pago oculto" aria-hidden="true">
+            <label for="paypal-email">Correo de PayPal:</label>
+            <input id="paypal-email" name="paypal-email" type="email" placeholder="correo@ejemplo.com">
+            <small>Integración ficticia.</small>
+        </div>
+
+        <!-- Sección: Depósito -->
+        <div id="seccion-deposito" class="campo-pago oculto" aria-hidden="true">
+            <label for="banco">Banco:</label>
+            <select id="banco" name="banco">
+                <option value="">Seleccionar banco...</option>
+                <option>BBVA</option>
+                <option>Banorte</option>
+                <option>HSBC</option>
+                <option>Santander</option>
+            </select>
+
+            <label for="referencia">Número de referencia / CLABE (ficticio):</label>
+            <input id="referencia" name="referencia" type="text" placeholder="Referencia de depósito">
+            <small>Demostración — no se procesa dinero real.</small>
+        </div>
+
+        <!-- Botones: Confirmar y Cancelar -->
+        <div style="display:flex; gap:12px; margin-top:20px;">
+            <button type="submit" class="btn confirmar" style="flex:1;">Confirmar Compra</button>
+            <button type="button" class="btn cancelar" style="flex:1;" onclick="history.back()">Cancelar Compra</button>
+        </div>
+    </form>
+
+    <div id="mensaje-salida" aria-live="polite"></div>
+</div>
+
+<script>
+const metodo = document.getElementById("metodo");
+const seccionTarjeta = document.getElementById("seccion-tarjeta");
+const seccionPayPal = document.getElementById("seccion-paypal");
+const seccionDeposito = document.getElementById("seccion-deposito");
+const form = document.getElementById("form-compra");
+const salida = document.getElementById("mensaje-salida");
+
+function ocultarSecciones() {
+    [seccionTarjeta, seccionPayPal, seccionDeposito].forEach(s => {
+        s.classList.add('oculto');
+        s.setAttribute('aria-hidden', 'true');
+    });
+}
+function actualizarSeccion() {
+    ocultarSecciones();
+    const val = metodo.value;
+    if (val === 'tarjeta') {
+        seccionTarjeta.classList.remove('oculto');
+        seccionTarjeta.setAttribute('aria-hidden', 'false');
+    } else if (val === 'paypal') {
+        seccionPayPal.classList.remove('oculto');
+        seccionPayPal.setAttribute('aria-hidden', 'false');
+    } else if (val === 'deposito') {
+        seccionDeposito.classList.remove('oculto');
+        seccionDeposito.setAttribute('aria-hidden', 'false');
+    }
+}
+metodo.addEventListener('change', actualizarSeccion);
+
+const tarjetaNum = document.getElementById('tarjeta-num');
+tarjetaNum && tarjetaNum.addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '').slice(0,19);
+    v = v.replace(/(.{4})/g, '$1 ').trim();
+    e.target.value = v;
+});
+
+form.addEventListener('submit', function(ev) {
+    ev.preventDefault();
+
+    const artista = document.getElementById("res-artista").textContent || "El Ajolote Dj";
+    const producto = document.getElementById("res-producto").textContent || "tu producto";
+    const precio = document.getElementById("res-precio").textContent || "0";
+
+    salida.innerHTML = `
+        <div class="mensaje exito">
+            <h3>¡Gracias por su compra!</h3>
+            <p><strong>El Ajolote Dj está muy feliz</strong> — tu pedido de <b>${escapeHtml(producto)}</b> (${escapeHtml(artista)}) por <b>${escapeHtml(precio)} MXN</b> fue recibido.</p>
+            <a class="volver-btn" href="{% url 'index_frontend' %}">Volver al inicio</a>
+        </div>
+    `;
+    form.reset();
+    ocultarSecciones();
+});
+
+/* Función para escapar HTML de querystring */
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+}
+</script>
+</body>
+</html>

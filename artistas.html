@@ -1,0 +1,195 @@
+<!DOCTYpe html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Artistas - AXOLOTL MUSIC</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body.artists-page { background: #ffdff3; color: #2b0030; }
+        .artists-container { max-width: 900px; margin: 22px auto; padding: 12px; }
+        .artists-header { text-align: center; margin: 8px 0 18px; }
+        .artists-header h2 { color: #ff66cc; font-size: 36px; margin: 6px 0; }
+        .search-wrap { display:flex; align-items:center; gap:8px; justify-content:center; margin-bottom: 18px; }
+        .search-input { width: 360px; max-width: 90%; padding: 10px 14px 10px 36px; border-radius: 22px; border: 2px solid #2b0030; background: #ffdff3; color: #2b0030; font-size: 16px; }
+        .search-icon { position: relative; margin-right: -320px; }
+        .alphabet-nav { display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom: 10px; }
+        .alphabet-nav a { text-decoration:none; color:#2b0030; font-weight:700; }
+        .letter-line { border-top: 2px solid #2b0030; margin: 8px 0 12px; }
+        .artist-list { display:flex; flex-direction:column; gap:8px; }
+        .artist-section { margin-bottom: 18px; }
+        .artist-section h3 { margin: 0 0 6px 6px; font-size: 20px; }
+        .artist-chip { display:inline-block; padding:8px 14px; background:#c51a8d; color:#fff; border-radius:20px; text-decoration:none; font-weight:700; margin:6px 8px 6px 6px; }
+        .artist-chip:hover { filter:brightness(1.05); }
+        .artist-chip.coming { background:#8e8e8e; color:#fff; font-style:italic; }
+        @media (max-width:600px){ .search-input{ width: 260px } }
+    </style>
+</head>
+<body class="artists-page">
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+                <img src="vinyl.png" alt="Logo AXOLOTL MUSIC">
+                <h1 style="margin: 0; font-size: 13px; line-height: 14px; color: #ff66cc; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;">
+                    AXOLOTL<br>MUSIC
+                </h1>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="artistas.html">ARTISTAS</a></li>
+            <li class="dropdown">
+                <a href="">GÉNEROS ▾</a>
+                <ul class="dropdown-content">
+                    <li><a href="genero.html">Pop</a></li>
+                    <li><a href="genero.html">K-Pop</a></li>
+                    <li><a href="genero.html">J-Pop</a></li>
+                    <li><a href="genero.html">Rock</a></li>
+                    <li><a href="genero.html">Latina</a></li>
+                </ul>
+            </li>
+            <li><a href="novedades.html">NOVEDADES</a></li>
+            <li class="dropdown">
+                <a href="">MÚSICA ▾</a>
+                <ul class="dropdown-content">
+                    <li><a href="#">Vinilos</a></li>
+                    <li><a href="#">CDs</a></li>
+                    <li><a href="#">Casetes</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="artists-container">
+        <div class="artists-header">
+            <h2>Artistas</h2>
+        </div>
+
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input id="artist-search" class="search-input" type="search" placeholder="Buscar artista...">
+        </div>
+
+        <div class="alphabet-nav" id="alphabet-nav">
+            
+            <a href="#A">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a><a href="#E">E</a>
+            <a href="#F">F</a><a href="#G">G</a><a href="#H">H</a><a href="#I">I</a><a href="#J">J</a>
+            <a href="#K">K</a><a href="#L">L</a><a href="#M">M</a><a href="#N">N</a><a href="#O">O</a>
+            <a href="#P">P</a><a href="#Q">Q</a><a href="#R">R</a><a href="#S">S</a><a href="#T">T</a>
+            <a href="#U">U</a><a href="#V">V</a><a href="#W">W</a><a href="#X">X</a><a href="#Y">Y</a><a href="#Z">Z</a>
+        </div>
+
+        <div class="artist-list">
+            
+            <div class="artist-section" id="A">
+                <h3>A</h3>
+                <div class="letter-line"></div>
+               <a class="artist-chip" href="comprar.html?artista=Ariana Grande">Ariana Grande</a>
+            </div>
+
+           
+            <div class="artist-section" id="B">
+                <h3>B</h3>
+                <div class="letter-line"></div>
+                <a class="artist-chip" href="comprar.html?artista=Billie Eillish">Billie Eilish</a>
+                <a class="artist-chip" href="comprar.html?artista=Britney Spears">Britney Spears</a>
+            </div>
+
+            
+            <div class="artist-section" id="C">
+                <h3>C</h3>
+                <div class="letter-line"></div>
+                <a class="artist-chip" href="comprar.html?artista=Cynthia Erivo">Cynthia Erivo</a>
+            </div>
+
+            
+            <div class="artist-section" id="D">
+                <h3>D</h3>
+                <div class="letter-line"></div>
+                <a class="artist-chip" href="comprar.html?artista=Doja Cat">Doja Cat</a>
+            </div>
+
+            <!-- E–R (sin artistas aún) -->
+            <div class="artist-section" id="E"><h3>E</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="F"><h3>F</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="G"><h3>G</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="H"><h3>H</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="I"><h3>I</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="J"><h3>J</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="K"><h3>K</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="L"><h3>L</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="M"><h3>M</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="N"><h3>N</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="O"><h3>O</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="P"><h3>P</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="Q"><h3>Q</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="R"><h3>R</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+
+            
+            <div class="artist-section" id="S">
+                <h3>S</h3>
+                <div class="letter-line"></div>
+                <a class="artist-chip" href="comprar.html?artista=Sabrina Carpenter">Sabrina Carpenter</a>
+                <a class="artist-chip" href="comprar.html?artista=Stray Kids">Stray Kids</a>
+            </div>
+
+           
+            <div class="artist-section" id="T">
+                <h3>T</h3>
+                <div class="letter-line"></div>
+                <a class="artist-chip" href="comprar.html?artista=Taylor Swift">Taylor Swift</a>
+            </div>
+
+            
+            <div class="artist-section" id="U"><h3>U</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="V"><h3>V</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="W"><h3>W</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="X"><h3>X</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="Y"><h3>Y</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+            <div class="artist-section" id="Z"><h3>Z</h3><div class="letter-line"></div><span class="artist-chip coming">Próximamente</span></div>
+        </div>
+    </section>
+</main>
+
+<script>
+
+(function(){
+    const input = document.getElementById('artist-search');
+    const chips = Array.from(document.querySelectorAll('.artist-chip'));
+
+    input.addEventListener('input', function(){
+        const q = input.value.trim().toLowerCase();
+        chips.forEach(c => {
+            const name = c.textContent.trim().toLowerCase();
+            c.style.display = name.includes(q) ? 'inline-block' : 'none';
+        });
+    });
+})();
+</script>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropdownLink = dropdown.querySelector('a');
+        if(!dropdownLink) return;
+
+        dropdownLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) dropdowns.forEach(d => d.classList.remove('active'));
+    });
+});
+</script>
+
+</body>
+</html>
