@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Eliminar Pedido - Administración</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body { background: #faf7fb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container { max-width: 600px; margin: 40px auto; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #ff4444; margin-bottom: 20px; }
+        .info { background: #ffe6e6; padding: 20px; border-radius: 6px; margin-bottom: 30px; }
+        .btn { padding: 12px 20px; margin: 10px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-delete { background: #ff4444; color: white; }
+        .btn-delete:hover { background: #dd0000; }
+        .btn-cancel { background: #999; color: white; text-decoration: none; }
+        .btn-cancel:hover { background: #666; }
+        .back-link { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #999; color: white; text-decoration: none; border-radius: 6px; }
+        .back-link:hover { background: #666; }
+    </style>
+</head>
+<body class="content-with-footer">
+    <div class="container">
+        <a href="{% url 'ver_pedidos' %}" class="back-link">← Volver a Pedidos</a>
+        <h1>⚠️ Eliminar Pedido</h1>
+        
+        <div class="info">
+            <p style="font-size: 16px; margin: 0;"><strong>¿Estás seguro de que deseas eliminar este pedido?</strong></p>
+            <p style="margin-top: 15px; color: #666;">
+                <strong>Pedido #{{ pedido.id }}</strong><br>
+                Cliente: {{ pedido.usuario.nombre }}<br>
+                Total: ${{ pedido.total }}<br>
+                Fecha: {{ pedido.fecha|date:"d/m/Y H:i" }}
+            </p>
+        </div>
+        
+        <form method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-delete">Sí, Eliminar Pedido</button>
+        </form>
+        <a href="{% url 'ver_pedidos' %}" class="btn btn-cancel">Cancelar</a>
+    </div>
+    {% include "footer.html" %}
+</body>
+</html>

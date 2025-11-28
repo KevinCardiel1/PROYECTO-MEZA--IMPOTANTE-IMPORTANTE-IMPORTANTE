@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfil - AXOLOTL MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="content-with-footer">
+    {% include 'navbar.html' %}
+    <main style="max-width:900px; margin: 28px auto; padding: 12px;">
+        <div class="admin-card" style="display:flex; gap:18px; align-items:center;">
+            <div style="width:120px; height:120px; border-radius:12px; overflow:hidden; background: #fff0fa; display:flex; align-items:center; justify-content:center;">
+                {% if usuario.profile_image %}
+                    <img src="{{ usuario.profile_image.url }}" style="width:100%; height:100%; object-fit:cover;">
+                {% else %}
+                    <div style="font-size:38px; color:#ff66cc;">👤</div>
+                {% endif %}
+            </div>
+            <div>
+                <h2 style="color:#ff66cc; margin:0;">{{ usuario.nombre }}</h2>
+                <p style="margin:6px 0; color:#666;">{{ usuario.email }}</p>
+                <p style="margin:6px 0; color:#666;">Tel: {{ usuario.tel }}</p>
+                <div style="margin-top:8px;">
+                    <a href="{% url 'editar_perfil' %}" class="btn">Editar perfil</a>
+                </div>
+            </div>
+        </div>
+
+        <section style="margin-top:18px;">
+            <h3 style="color:#5a005a;">Historial de Compras</h3>
+            {% if pedidos %}
+                <ul style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+                    {% for p in pedidos %}
+                        <li style="background:#fff0fa; padding:12px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <strong>Pedido #{{ p.id }}</strong>
+                                    <div style="color:#666;">Fecha: {{ p.fecha }}</div>
+                                </div>
+                                <div style="font-weight:800; color:#ff66cc;">${{ p.total }}</div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p style="color:#999;">No tienes pedidos aún.</p>
+            {% endif %}
+        </section>
+    </main>
+    {% include 'footer.html' %}
+</body>
+</html>

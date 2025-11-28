@@ -1,18 +1,39 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # ======================
 # MODELO USUARIO
 # ======================
 class Usuario(models.Model):
-    nombre = models.CharField(max_length=100)
-    contrasena = models.CharField(max_length=100)
+    # Vincula el perfil con el User de Django para usar autenticación estándar
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    nombre = models.CharField(max_length=100, blank=True)
     email = models.EmailField(unique=True)
-    tel = models.CharField(max_length=15)
-    direccion = models.CharField(max_length=200)
-    codigo_postal = models.IntegerField()
+    tel = models.CharField(max_length=15, blank=True)
+    direccion = models.CharField(max_length=200, blank=True)
+    codigo_postal = models.IntegerField(blank=True, null=True)
+    profile_image = models.ImageField(upload_to='profiles/', blank=True, null=True)
 
     def __str__(self):
-        return self.nombre
+        return self.user.username if self.user else self.nombre or self.email
+
+
+# Crear/actualizar perfil automáticamente al crear User
+@receiver(post_save, sender=User)
+def create_or_update_usuario(sender, instance, created, **kwargs):
+    if created:
+        Usuario.objects.create(user=instance, email=instance.email, nombre=instance.username)
+    else:
+        # Actualizar email/nombre si ya existe perfil
+        try:
+            perfil = instance.usuario
+            perfil.email = instance.email
+            perfil.nombre = instance.username
+            perfil.save()
+        except Usuario.DoesNotExist:
+            Usuario.objects.create(user=instance, email=instance.email, nombre=instance.username)
 
 
 # ======================
@@ -85,3 +106,27 @@ class DetallePedido(models.Model):
 
     def __str__(self):
         return f"Detalle #{self.id} - {self.producto.nombre_producto} ({self.cantidad_producto})"
+
+
+# ======================
+# CARRITO DE COMPRAS
+# ======================
+class Cart(models.Model):
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name='cart')
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Carrito - {self.usuario.nombre or self.usuario.email}"
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    added = models.DateTimeField(auto_now_add=True)
+
+    def subtotal(self):
+        return self.cantidad * self.producto.precio
+
+    def __str__(self):
+        return f"{self.cantidad} x {self.producto.nombre_producto}"

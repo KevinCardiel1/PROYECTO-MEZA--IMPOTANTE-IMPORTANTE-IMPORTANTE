@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registrarse - AXOLOTL MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div style="display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;">
+        <div style="background:#fff0fa;padding:30px;border-radius:12px;width:100%;max-width:400px;">
+            <h2 style="text-align:center;color:#c51a8d;">Crear Cuenta</h2>
+            {% if messages %}
+                {% for msg in messages %}
+                    <div style="padding:8px;border-radius:8px;margin-bottom:8px;background:#ffe9ee;color:#7a002f;">{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                <label style="font-weight:600;color:#2b0030;">Usuario</label>
+                <input type="text" name="username" required style="width:100%;padding:8px;margin:6px 0 12px;border-radius:6px;border:1px solid #ccc;box-sizing:border-box;">
+                
+                <label style="font-weight:600;color:#2b0030;">Correo</label>
+                <input type="email" name="email" required style="width:100%;padding:8px;margin:6px 0 12px;border-radius:6px;border:1px solid #ccc;box-sizing:border-box;">
+                
+                <label style="font-weight:600;color:#2b0030;">Contraseña</label>
+                <input type="password" name="password" required style="width:100%;padding:8px;margin:6px 0 12px;border-radius:6px;border:1px solid #ccc;box-sizing:border-box;">
+                
+                <label style="font-weight:600;color:#2b0030;">¿Eres empleado o usuario?</label>
+                <div style="margin:12px 0;display:flex;gap:15px;">
+                    <label style="display:flex;align-items:center;cursor:pointer;font-weight:500;">
+                        <input type="radio" name="account_type" value="client" required style="margin-right:6px;cursor:pointer;">
+                        👤 Usuario/Cliente
+                    </label>
+                    <label style="display:flex;align-items:center;cursor:pointer;font-weight:500;">
+                        <input type="radio" name="account_type" value="employee" required style="margin-right:6px;cursor:pointer;">
+                        👔 Empleado
+                    </label>
+                </div>
+                
+                <button type="submit" style="width:100%;padding:10px;border-radius:20px;background:linear-gradient(90deg,#5a005a,#c51a8d);color:#fff;border:none;margin-top:12px;font-weight:600;cursor:pointer;">Crear cuenta</button>
+            </form>
+            <div style="text-align:center;margin-top:10px;">
+                <a href="{% url 'login_frontend' %}" style="color:#c51a8d;text-decoration:none;font-weight:500;">Ya tengo cuenta</a>
+            </div>
+        </div>
+    </div>
+
+    {% include "footer.html" %}
+</body>
+</html>

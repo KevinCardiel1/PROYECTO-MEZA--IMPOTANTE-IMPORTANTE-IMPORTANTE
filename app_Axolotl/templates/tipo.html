@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ tipo_nombre }} - AXOLOTL MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 15px; }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { color: #ff66cc; font-size: 32px; margin: 20px 0; }
+        .type-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+        .type-tabs a { padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 600; transition: 0.3s; border: 2px solid #ff66cc; color: #ff66cc; }
+        .type-tabs a.active { background: #ff66cc; color: white; }
+        .type-tabs a:hover { background: #ff66cc; color: white; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: #fff0fa; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: 0.3s; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+        .product-img { width: 100%; height: 220px; object-fit: cover; }
+        .product-info { padding: 15px; }
+        .product-name { font-weight: 700; color: #2b0030; margin-bottom: 8px; font-size: 14px; }
+        .product-artist { color: #999; font-size: 12px; margin-bottom: 10px; }
+        .product-footer { display: flex; gap: 10px; }
+        .btn { display: inline-block; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; transition: 0.3s; }
+        .btn-primary { background: #ff66cc; color: white; }
+        .btn-primary:hover { background: #c51a8d; }
+        .no-products { text-align: center; padding: 60px 20px; color: #999; }
+        .no-products p { font-size: 16px; }
+    </style>
+</head>
+<body class="content-with-footer">
+    {% include "navbar.html" %}
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ tipo_nombre }}</h1>
+            <p style="color: #666; font-size: 14px;">Explora todos nuestros {{ tipo_nombre|lower }}</p>
+        </div>
+        
+        <div class="type-tabs">
+            <a href="{% url 'tipo_frontend' %}?tipo=Vinilo" class="{% if tipo_param|lower == 'vinilo' %}active{% endif %}">🎵 Vinilos</a>
+            <a href="{% url 'tipo_frontend' %}?tipo=CD" class="{% if tipo_param|lower == 'cd' %}active{% endif %}">💿 CDs</a>
+            <a href="{% url 'tipo_frontend' %}?tipo=Casete" class="{% if tipo_param|lower == 'casete' %}active{% endif %}">📼 Casetes</a>
+        </div>
+        
+        {% if todos_productos %}
+            <div class="products-grid">
+                {% for producto in todos_productos %}
+                <div class="product-card">
+                    {% if producto.img %}
+                        <img src="{{ producto.img.url }}" alt="{{ producto.nombre_producto }}" class="product-img">
+                    {% else %}
+                        <div class="product-img" style="background: linear-gradient(135deg, #ff66cc, #c51a8d); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">📀</div>
+                    {% endif %}
+                    <div class="product-info">
+                        <div class="product-name">{{ producto.nombre_producto }}</div>
+                        <div class="product-artist">{{ producto.artista.nombre_artista }}</div>
+                        <div style="font-size: 11px; color: #999; margin-bottom: 10px;">{{ producto.genero }} • {{ producto.tipo }}</div>
+                        <div class="product-footer">
+                            <a href="{% url 'comprar_frontend' %}?artista={{ producto.artista.nombre_artista|urlencode }}&producto={{ producto.nombre_producto|urlencode }}" class="btn btn-primary" style="flex: 1; text-align: center;">Ver</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-products">
+                <p>📭 No hay {{ tipo_nombre|lower }} disponibles en este momento.</p>
+                <a href="{% url 'index_frontend' %}" style="color: #ff66cc; text-decoration: none; font-weight: 600;">← Volver al inicio</a>
+            </div>
+        {% endif %}
+    </div>
+    
+    {% include "footer.html" %}
+</body>
+</html>

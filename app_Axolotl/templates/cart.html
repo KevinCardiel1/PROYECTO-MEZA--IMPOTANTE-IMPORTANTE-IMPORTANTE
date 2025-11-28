@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carrito - AXOLOTL MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="content-with-footer">
+    {% include 'navbar.html' %}
+    <main style="max-width:1000px; margin:28px auto; padding: 12px;">
+        <h2 style="color:#ff66cc;">Tu Carrito</h2>
+        {% if items %}
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:12px;">
+                {% for item in items %}
+                <div style="display:flex; gap:12px; align-items:center; background:#fff0fa; padding:12px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                    <div style="width:84px; height:84px; overflow:hidden; border-radius:8px; background:linear-gradient(135deg,#ff66cc,#c51a8d); display:flex; align-items:center; justify-content:center; color:#fff; font-size:28px;">
+                        {% if item.producto.img %}
+                            <img src="{{ item.producto.img.url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ item.producto.nombre_producto }}">
+                        {% else %}
+                            🎵
+                        {% endif %}
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-weight:800; color:#2b0030;">{{ item.producto.nombre_producto }}</div>
+                        <div style="color:#666; font-size:13px;">{{ item.producto.artista.nombre_artista }}</div>
+                        <div style="margin-top:6px; font-weight:700;">${{ item.producto.precio }} x {{ item.cantidad }} = ${{ item.subtotal }}</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+                        <form method="post" action="{% url 'update_cart_item' item.id %}">
+                            {% csrf_token %}
+                            <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" style="width:80px; padding:8px; border-radius:8px; border:2px solid #c51a8d;">
+                            <button type="submit" style="margin-top:8px;">Actualizar</button>
+                        </form>
+                        <form method="post" action="{% url 'remove_cart_item' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" style="background:#ff4444;">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div style="margin-top:16px; text-align:right;">
+                <div style="font-size:18px; font-weight:800;">Total: ${{ total }}</div>
+                <a href="{% url 'finalizar_frontend' %}" class="buy-btn" style="margin-top:8px; display:inline-block;">Pagar</a>
+            </div>
+        {% else %}
+            <div style="padding:40px; text-align:center; color:#999; background:#fff0fa; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">Tu carrito está vacío.</div>
+        {% endif %}
+    </main>
+
+    {% include 'footer.html' %}
+</body>
+</html>

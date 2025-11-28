@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Eliminar Producto</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body { background: linear-gradient(180deg, #fff0fb 0%, #ffe6f6 100%) !important; color: #2b0030; }
+        .admin-card { background: #fff0fa !important; }
+        .confirm-btn { background: #ff4444; color: #fff; border-radius: 8px; padding: 8px 10px; border: none; }
+        a{ color:#5a005a; }
+    </style>
+</head>
+<body class="content-with-footer">
+    <div style="padding:20px; max-width:720px; margin:18px auto;">
+        <div class="admin-card">
+            <h2 style="color:#ff66cc; margin-top:0;">Eliminar Producto</h2>
+            <p>¿Deseas eliminar el producto "<strong>{{ producto.nombre_producto }}</strong>"?</p>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div style="display:flex; gap:12px; align-items:center; margin-top:12px;">
+                    <button type="submit" style="background:#ff4444;">Sí, eliminar</button>
+                    <a href="{% url 'ver_productos' %}" style="color:#5a005a; font-weight:700;">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% include "footer.html" %}
+</body>
+</html>

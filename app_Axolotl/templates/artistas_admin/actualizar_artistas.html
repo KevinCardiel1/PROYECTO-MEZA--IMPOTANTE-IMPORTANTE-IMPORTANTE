@@ -1,30 +1,44 @@
-{% extends 'base.html' %}
-
-{% block title %}Actualizar Artista{% endblock %}
-
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <h2 class="mb-4 text-center" style="color: #4a148c;">Actualizar Artista: {{ artista.nombre_artista }}</h2>
-        <div class="card shadow-sm" style="border-radius: 15px; border: 1px solid #d1c4e9;">
-            <div class="card-body" style="background-color: #f3e5f5; border-radius: 15px;">
-                <form method="post" action="{% url 'actualizar_artistas' artista.id %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="nombre_artista" class="form-label">Nombre del Artista:</label>
-                        <input type="text" class="form-control" id="nombre_artista" name="nombre_artista" value="{{ artista.nombre_artista }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripción:</label>
-                        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required>{{ artista.descripcion }}</textarea>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary" style="background-color: #6a1b9a; border-color: #6a1b9a;">Actualizar Artista</button>
-                        <a href="{% url 'ver_artistas' %}" class="btn btn-outline-secondary">Cancelar</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Actualizar Artista - Administración</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body { background: #faf7fb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container { max-width: 600px; margin: 40px auto; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+        h1 { color: #ff66cc; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        input, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px; transition: 0.3s; font-family: inherit; }
+        input:focus, textarea:focus { outline: none; border-color: #ff66cc; box-shadow: 0 0 8px rgba(255, 102, 204, 0.3); }
+        textarea { resize: vertical; min-height: 100px; }
+        .btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff66cc; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: #c51a8d; }
+        .back-link { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #999; color: white; text-decoration: none; border-radius: 6px; }
+        .back-link:hover { background: #666; }
+    </style>
+</head>
+<body class="content-with-footer">
+    <div class="container">
+        <a href="{% url 'ver_artistas' %}" class="back-link">← Volver a Artistas</a>
+        <h1>Actualizar Artista: {{ artista.nombre_artista }}</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding: 15px; margin-bottom: 15px; border-radius: 6px; background: {% if 'error' in message.tags %}#ffcccc{% else %}#ccffcc{% endif %}; color: #333;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">Actualizar Artista</button>
+        </form>
     </div>
-</div>
-{% endblock %}
+    {% include "footer.html" %}
+</body>
+</html>

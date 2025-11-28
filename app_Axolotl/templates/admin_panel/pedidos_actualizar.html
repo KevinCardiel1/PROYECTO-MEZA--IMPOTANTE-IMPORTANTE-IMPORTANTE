@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Actualizar Pedido - Administración</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body { background: linear-gradient(180deg, #fff0fb 0%, #ffe6f6 100%) !important; color: #2b0030; }
+        .admin-card { background: #fff0fa !important; }
+        form select, form input { background:#fff; border:2px solid #c51a8d; padding:8px; border-radius:6px; width:100%; box-sizing:border-box; }
+        .buttons{ display:flex; gap:12px; margin-top:12px; align-items:center; }
+        a{ color:#5a005a; }
+    </style>
+    <style>
+        body { background: #faf7fb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container { max-width: 600px; margin: 40px auto; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+        h1 { color: #ff66cc; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        select, input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px; transition: 0.3s; }
+        select:focus, input:focus { outline: none; border-color: #ff66cc; box-shadow: 0 0 8px rgba(255, 102, 204, 0.3); }
+        .btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff66cc; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: #c51a8d; }
+        .back-link { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #999; color: white; text-decoration: none; border-radius: 6px; }
+        .back-link:hover { background: #666; }
+    </style>
+</head>
+<body class="content-with-footer">
+    <div class="container">
+        <a href="{% url 'ver_pedidos' %}" class="back-link">← Volver a Pedidos</a>
+        <h1>Actualizar Pedido #{{ pedido.id }}</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding: 15px; margin-bottom: 15px; border-radius: 6px; background: {% if 'error' in message.tags %}#ffcccc{% else %}#ccffcc{% endif %}; color: #333;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="usuario">Cliente</label>
+                <select id="usuario" name="usuario" disabled>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}" {% if usuario.id == pedido.usuario.id %}selected{% endif %}>{{ usuario.nombre }}</option>
+                    {% endfor %}
+                </select>
+                <small style="color: #999;">No se puede cambiar el cliente de un pedido</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="cantidad">Cantidad de Productos *</label>
+                <input type="number" id="cantidad" name="cantidad_producto" value="{{ pedido.cantidad_producto }}" min="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="total">Total ($) *</label>
+                <input type="number" id="total" name="total" value="{{ pedido.total }}" min="0" step="0.01" required>
+            </div>
+            
+            <button type="submit" class="btn">Actualizar Pedido</button>
+        </form>
+    </div>
+    {% include "footer.html" %}
+</body>
+</html>

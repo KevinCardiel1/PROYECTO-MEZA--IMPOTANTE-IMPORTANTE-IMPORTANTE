@@ -7,142 +7,93 @@
     <title>Artistas - AXOLOTL MUSIC</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        /* Mantén los estilos específicos de esta página aquí o en style.css */
-        body.artists-page { background: #ffdff3; color: #2b0030; }
+        body { background: #faf7fb; color: #2b0030; }
         .artists-container { max-width: 900px; margin: 22px auto; padding: 12px; }
         .artists-header { text-align: center; margin: 8px 0 18px; }
         .artists-header h2 { color: #ff66cc; font-size: 36px; margin: 6px 0; }
         .search-wrap { display:flex; align-items:center; gap:8px; justify-content:center; margin-bottom: 18px; }
-        .search-input { width: 360px; max-width: 90%; padding: 10px 14px 10px 36px; border-radius: 22px; border: 2px solid #2b0030; background: #ffdff3; color: #2b0030; font-size: 16px; }
-        .search-icon { position: relative; margin-right: -320px; } /* Ajusta esto si el input es más grande */
+        .search-input { width: 360px; max-width: 90%; padding: 10px 14px 10px 36px; border-radius: 22px; border: 2px solid #ff66cc; background: #fff; color: #2b0030; font-size: 16px; box-sizing: border-box; }
         .alphabet-nav { display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom: 10px; }
-        .alphabet-nav a { text-decoration:none; color:#2b0030; font-weight:700; }
-        .letter-line { border-top: 2px solid #2b0030; margin: 8px 0 12px; }
+        .alphabet-nav a { text-decoration:none; color:#ff66cc; font-weight:700; cursor: pointer; }
+        .alphabet-nav a:hover { color: #c51a8d; }
+        .letter-line { border-top: 2px solid #ff66cc; margin: 8px 0 12px; }
         .artist-list { display:flex; flex-direction:column; gap:8px; }
         .artist-section { margin-bottom: 18px; }
-        .artist-section h3 { margin: 0 0 6px 6px; font-size: 20px; }
-        .artist-chip { display:inline-block; padding:8px 14px; background:#c51a8d; color:#fff; border-radius:20px; text-decoration:none; font-weight:700; margin:6px 8px 6px 6px; }
-        .artist-chip:hover { filter:brightness(1.05); }
+        .artist-section h3 { margin: 0 0 6px 6px; font-size: 20px; color: #ff66cc; }
+        .artist-chip { display:inline-block; padding:8px 14px; background:#c51a8d; color:#fff; border-radius:20px; text-decoration:none; font-weight:700; margin:6px 8px 6px 6px; transition: 0.3s; }
+        .artist-chip:hover { background: #9d0e60; filter: brightness(0.9); }
         .artist-chip.coming { background:#8e8e8e; color:#fff; font-style:italic; }
-        @media (max-width:600px){ .search-input{ width: 260px } }
+        @media (max-width:600px){ .search-input{ width: 260px; max-width: 90%; } }
     </style>
 </head>
-<body class="artists-page">
-<header>
-    <nav class="navbar">
-        <div class="logo">
-            <a href="{% url 'index_frontend' %}" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
-                <img src="{% static 'vinyl.png' %}" alt="Logo AXOLOTL MUSIC">
-                <h1 style="margin: 0; font-size: 13px; line-height: 14px; color: #ff66cc; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;">
-                    AXOLOTL<br>MUSIC
-                </h1>
-            </a>
-        </div>
-        <ul class="nav-links">
-            <li><a href="{% url 'artistas_frontend' %}">ARTISTAS</a></li>
-            <li class="dropdown">
-                <a href="">GÉNEROS ▾</a>
-                <ul class="dropdown-content">
-                    <li><a href="{% url 'genero_frontend' %}?genero=Pop">Pop</a></li>
-                    <li><a href="{% url 'genero_frontend' %}?genero=K-Pop">K-Pop</a></li>
-                    <li><a href="{% url 'genero_frontend' %}?genero=Rock">Rock</a></li>
-                    <li><a href="{% url 'genero_frontend' %}?genero=Latina">Latina</a></li>
-                </ul>
-            </li>
-            <li><a href="{% url 'novedades_frontend' %}">NOVEDADES</a></li>
-            <li class="dropdown">
-                <a href="">MÚSICA ▾</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">Vinilos</a></li> {# TODO: Enlazar a vista de tipo de música #}
-                    <li><a href="#">CDs</a></li>
-                    <li><a href="#">Casetes</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-</header>
+<body class="content-with-footer">
+    {% include "navbar.html" %}
 
-<main>
-    <section class="artists-container">
-        <div class="artists-header">
-            <h2>Artistas</h2>
-        </div>
-
-        <div class="search-wrap">
-            <span class="search-icon">🔍</span>
-            <input id="artist-search" class="search-input" type="search" placeholder="Buscar artista...">
-        </div>
-
-        <div class="alphabet-nav" id="alphabet-nav">
-            {% for letra, artistas_list in artistas_por_letra.items %}
-                {% if artistas_list %}
-                    <a href="#{{ letra }}">{{ letra }}</a>
-                {% else %}
-                    <span style="color:#8e8e8e;">{{ letra }}</span>
-                {% endif %}
-            {% endfor %}
-        </div>
-
-        <div class="artist-list">
-            {% for letra, artistas_list in artistas_por_letra.items %}
-            <div class="artist-section" id="{{ letra }}">
-                <h3>{{ letra }}</h3>
-                <div class="letter-line"></div>
-                {% if artistas_list %}
-                    {% for artista in artistas_list %}
-                        <a class="artist-chip" href="{% url 'comprar_frontend' %}?artista={{ artista.nombre_artista|urlencode }}">{{ artista.nombre_artista }}</a>
-                    {% endfor %}
-                {% else %}
-                    <span class="artist-chip coming">Próximamente</span>
-                {% endif %}
+    <main>
+        <section class="artists-container">
+            <div class="artists-header">
+                <h2>Artistas</h2>
             </div>
-            {% endfor %}
-        </div>
-    </section>
-</main>
 
-<script>
-(function(){
-    const input = document.getElementById('artist-search');
-    const artistSections = Array.from(document.querySelectorAll('.artist-section'));
+            <div class="search-wrap">
+                <span class="search-icon">🔍</span>
+                <input id="artist-search" class="search-input" type="search" placeholder="Buscar artista...">
+            </div>
 
-    input.addEventListener('input', function(){
-        const q = input.value.trim().toLowerCase();
-        
-        artistSections.forEach(section => {
-            const chips = Array.from(section.querySelectorAll('.artist-chip'));
-            let anyChipVisible = false;
-            chips.forEach(c => {
-                const name = c.textContent.trim().toLowerCase();
-                if (name.includes(q)) {
-                    c.style.display = 'inline-block';
-                    anyChipVisible = true;
-                } else {
-                    c.style.display = 'none';
-                }
+            <div class="alphabet-nav" id="alphabet-nav">
+                {% for letra, artistas_list in artistas_por_letra.items %}
+                    {% if artistas_list %}
+                        <a href="#{{ letra }}" onclick="document.getElementById('{{ letra }}').scrollIntoView({behavior:'smooth'}); return false;">{{ letra }}</a>
+                    {% else %}
+                        <span style="color:#ccc;">{{ letra }}</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="artist-list">
+                {% for letra, artistas_list in artistas_por_letra.items %}
+                <div class="artist-section" id="{{ letra }}">
+                    <h3>{{ letra }}</h3>
+                    <div class="letter-line"></div>
+                    {% if artistas_list %}
+                        {% for artista in artistas_list %}
+                            <a class="artist-chip" href="{% url 'comprar_frontend' %}?artista={{ artista.nombre_artista|urlencode }}">{{ artista.nombre_artista }}</a>
+                        {% endfor %}
+                    {% else %}
+                        <span class="artist-chip coming">Próximamente</span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <script>
+    (function(){
+        const input = document.getElementById('artist-search');
+        const artistSections = Array.from(document.querySelectorAll('.artist-section'));
+
+        input.addEventListener('input', function(){
+            const q = input.value.trim().toLowerCase();
+            
+            artistSections.forEach(section => {
+                const chips = Array.from(section.querySelectorAll('.artist-chip'));
+                let anyChipVisible = false;
+                chips.forEach(c => {
+                    const name = c.textContent.trim().toLowerCase();
+                    if (name.includes(q)) {
+                        c.style.display = 'inline-block';
+                        anyChipVisible = true;
+                    } else {
+                        c.style.display = 'none';
+                    }
+                });
+                section.style.display = anyChipVisible ? 'block' : 'none';
             });
-            // Oculta/muestra la sección completa si no hay artistas que coincidan
-            section.style.display = anyChipVisible ? 'block' : 'none';
         });
-    });
-})();
+    })();
+    </script>
 
-document.addEventListener('DOMContentLoaded', function() {
-    const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dropdown => {
-        const dropdownLink = dropdown.querySelector('a');
-        if(!dropdownLink) return;
-        dropdownLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
-            dropdown.classList.toggle('active');
-        });
-    });
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) dropdowns.forEach(d => d.classList.remove('active'));
-    });
-});
-</script>
-
+    {% include "footer.html" %}
 </body>
 </html>

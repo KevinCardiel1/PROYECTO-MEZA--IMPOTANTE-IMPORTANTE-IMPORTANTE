@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Agregar/Editar Empleado</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body { background: linear-gradient(180deg, #fff0fb 0%, #ffe6f6 100%) !important; color: #2b0030; }
+        .admin-card { background: #fff0fa !important; }
+        form input, form select { background: #fff; border: 2px solid #c51a8d; color: #2b0030; padding: 10px; border-radius: 8px; width: 100%; box-sizing: border-box; }
+        .buttons{ display:flex; gap:12px; margin-top:12px; align-items:center; }
+        h2{ color:#ff66cc; }
+    </style>
+</head>
+<body class="content-with-footer" style="padding:18px;">
+    <div style="max-width:720px; margin: 12px auto;">
+        <div class="admin-card">
+            <h2 style="color:#ff66cc; margin-top:0;">{% if user_obj %}Editar{% else %}Agregar{% endif %} Empleado</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    {{ form.as_p }}
+                </div>
+                <div class="form-row">
+                    <label class="form-label"><input type="checkbox" name="is_staff" {% if user_obj and user_obj.is_staff %}checked{% endif %}> Marcar como staff</label>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center; margin-top:8px;">
+                    <button type="submit">Guardar</button>
+                    <a href="{% url 'ver_empleados' %}" style="color:#5a005a; font-weight:700;">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% include "footer.html" %}
+</body>
+</html>

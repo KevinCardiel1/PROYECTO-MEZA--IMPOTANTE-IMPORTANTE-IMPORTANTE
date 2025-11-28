@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editar Perfil - AXOLOTL MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="content-with-footer">
+    {% include 'navbar.html' %}
+    <main style="max-width:720px; margin:28px auto; padding:12px;">
+        <div class="admin-card">
+            <h2 style="color:#ff66cc; margin-top:0;">Editar perfil</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div style="display:flex; gap:8px; margin-top:12px;">
+                    <button type="submit">Guardar</button>
+                    <a href="{% url 'perfil_usuario' %}" style="color:#5a005a; font-weight:700;">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+    {% include 'footer.html' %}
+</body>
+</html>

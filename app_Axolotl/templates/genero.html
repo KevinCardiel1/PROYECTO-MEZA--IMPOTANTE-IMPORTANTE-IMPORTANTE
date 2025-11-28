@@ -4,248 +4,109 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Géneros - AXOLOTL MUSIC</title>
+    <title>{{ genero_nombre }} - AXOLOTL MUSIC</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        /* Mantén los estilos específicos de esta página aquí o en style.css */
-        body.genero-page {
-            background: #ffdff3;
-            color: #2b0030;
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-
-        .genero-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #fff0fa;
-            border-radius: 16px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .genero-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .genero-header h2 {
-            color: #c51a8d;
-            font-size: 38px;
-            margin: 0;
-        }
-
-        .category-title {
-            font-size: 26px;
-            color: #2b0030;
-            text-align: left;
-            margin: 30px 0 10px 10px;
-            border-left: 6px solid #c51a8d;
-            padding-left: 10px;
-        }
-
-        .comprar-sections {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .comprar-card {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            overflow: hidden;
-            text-align: center;
-            padding-bottom: 15px;
-        }
-
-        .comprar-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-        }
-
-        .comprar-card img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-        }
-
-        .comprar-card h3 {
-            color: #c51a8d;
-            font-size: 18px;
-            margin: 12px;
-        }
-
-        .price {
-            text-align: center;
-            color: #2b0030;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .buy-btn {
-            background: linear-gradient(90deg, #5a005a, #c51a8d);
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .buy-btn:hover {
-            background: linear-gradient(90deg, #7a007a, #ff4db8);
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 25px;
-            text-decoration: none;
-            color: #fff;
-            background: linear-gradient(90deg, #5a005a, #c51a8d);
-            padding: 10px 24px;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        .back-link:hover {
-            background: linear-gradient(90deg, #7a007a, #ff4db8);
-        }
-
-        @media (max-width:600px){
-            .comprar-card img { height: 200px; }
-            .genero-header h2 { font-size: 30px; }
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            padding: 8px 0;
-        }
-        .dropdown.open .dropdown-content {
-            display: block;
-        }
+        body { background: #faf7fb; color: #2b0030; }
+        .genero-container { max-width: 1200px; margin: 30px auto; padding: 20px 15px; }
+        .genero-header { text-align: center; margin-bottom: 30px; }
+        .genero-header h2 { color: #ff66cc; font-size: 38px; margin: 0 0 8px; }
+        .genero-header p { color: #666; font-size: 14px; margin: 0; }
+        .category-title { font-size: 24px; color: #2b0030; text-align: left; margin: 30px 0 15px 0; border-left: 4px solid #ff66cc; padding-left: 12px; }
+        .comprar-sections { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .comprar-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: 0.3s; }
+        .comprar-card:hover { transform: translateY(-4px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+        .comprar-card img { width: 100%; height: 200px; object-fit: cover; }
+        .comprar-card h3 { color: #ff66cc; font-size: 16px; margin: 10px 12px 4px; }
+        .comprar-card p { margin: 4px 12px; font-size: 12px; color: #666; }
+        .price { font-weight: 700; color: #2b0030; font-size: 14px; margin: 8px 12px 10px !important; }
+        .buy-btn { display: inline-block; margin: 0 12px 12px; padding: 8px 16px; background: #ff66cc; color: white; text-decoration: none; border-radius: 20px; font-weight: 600; font-size: 12px; transition: 0.3s; }
+        .buy-btn:hover { background: #c51a8d; }
+        .back-link { display: inline-block; margin-top: 20px; padding: 10px 24px; background: linear-gradient(90deg, #5a005a, #c51a8d); color: white; text-decoration: none; border-radius: 20px; font-weight: 600; transition: 0.3s; }
+        .back-link:hover { background: linear-gradient(90deg, #7a007a, #ff4db8); }
+        .no-products { text-align: center; padding: 40px 20px; color: #999; }
+        @media (max-width: 600px) { .comprar-card img { height: 160px; } .genero-header h2 { font-size: 28px; } }
     </style>
 </head>
-<body class="genero-page">
-<header>
-    <nav class="navbar">
-        <div class="logo">
-            <a href="{% url 'index_frontend' %}" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
-                <img src="{% static 'vinyl.png' %}" alt="Logo AXOLOTL MUSIC">
-                <h1 style="margin: 0; font-size: 13px; line-height: 14px; color: #ff66cc; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;">
-                    AXOLOTL<br>MUSIC
-                </h1>
-            </a>
-        </div>
-        <ul class="nav-links">
-            <li><a href="{% url 'artistas_frontend' %}">ARTISTAS</a></li>
-            <li class="dropdown genero-dropdown">
-                <a href="#" id="genero-menu">GÉNEROS ▾</a>
-                <ul class="dropdown-content">
-                    <li><a href="{% url 'genero_frontend' %}?genero=Pop">Pop</a></li>
-                    <li><a href="{% url 'genero_frontend' %}?genero=K-Pop">K-Pop</a></li>
-                    <li><a href="{% url 'genero_frontend' %}?genero=Rock">Rock</a></li>
-                    <li><a href="{% url 'genero_frontend' %}?genero=Latina">Latina</a></li>
-                </ul>
-            </li>
-            <li><a href="{% url 'novedades_frontend' %}">NOVEDADES</a></li>
-            <li class="dropdown">
-                <a href="#">MÚSICA ▾</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">Vinilos</a></li> {# TODO: Enlazar a vista de tipo de música #}
-                    <li><a href="#">CDs</a></li>
-                    <li><a href="#">Casetes</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-</header>
+<body class="content-with-footer">
+    {% include "navbar.html" %}
 
-<main>
-    <section class="genero-container">
-        <div class="genero-header">
-            <h2 id="genero-nombre">{{ genero_nombre }}</h2>
-        </div>
+    <main>
+        <section class="genero-container">
+            <div class="genero-header">
+                <h2>{{ genero_nombre }}</h2>
+                <p>Explora todos nuestros productos de este género</p>
+            </div>
 
-        <div id="product-sections">
             {% if vinilos %}
-                <h3 class="category-title">Vinilos</h3>
+                <h3 class="category-title">🎵 Vinilos</h3>
                 <div class="comprar-sections">
                     {% for item in vinilos %}
                         <div class="comprar-card">
-                            <img src="{% static item.img %}" alt="{{ item.nombre_producto }}"> {# Asume que `item.img` es un path estático #}
+                            {% if item.img %}
+                                <img src="{{ item.img.url }}" alt="{{ item.nombre_producto }}">
+                            {% else %}
+                                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #ff66cc, #c51a8d); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px;">🎵</div>
+                            {% endif %}
                             <h3>{{ item.nombre_producto }}</h3>
-                            <p>Artista: {{ item.artista.nombre_artista }}</p>
-                            <p class="price">MXN ${{ item.precio }}</p>
-                            <a href="{% url 'finalizar_frontend' %}?artista={{ item.artista.nombre_artista|urlencode }}&producto={{ item.nombre_producto|urlencode }}&precio={{ item.precio }}" class="buy-btn">Comprar</a>
+                            <p style="font-weight: 600;">{{ item.artista.nombre_artista }}</p>
+                            <p class="price">${{ item.precio }}</p>
+                            <a href="{% url 'comprar_frontend' %}?artista={{ item.artista.nombre_artista|urlencode }}&producto={{ item.nombre_producto|urlencode }}" class="buy-btn">Ver</a>
                         </div>
                     {% endfor %}
                 </div>
             {% endif %}
 
             {% if cds %}
-                <h3 class="category-title">CDs</h3>
+                <h3 class="category-title">💿 CDs</h3>
                 <div class="comprar-sections">
                     {% for item in cds %}
                         <div class="comprar-card">
-                            <img src="{% static item.img %}" alt="{{ item.nombre_producto }}"> {# Asume que `item.img` es un path estático #}
+                            {% if item.img %}
+                                <img src="{{ item.img.url }}" alt="{{ item.nombre_producto }}">
+                            {% else %}
+                                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #ff66cc, #c51a8d); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px;">💿</div>
+                            {% endif %}
                             <h3>{{ item.nombre_producto }}</h3>
-                             <p>Artista: {{ item.artista.nombre_artista }}</p>
-                            <p class="price">MXN ${{ item.precio }}</p>
-                            <a href="{% url 'finalizar_frontend' %}?artista={{ item.artista.nombre_artista|urlencode }}&producto={{ item.nombre_producto|urlencode }}&precio={{ item.precio }}" class="buy-btn">Comprar</a>
+                            <p style="font-weight: 600;">{{ item.artista.nombre_artista }}</p>
+                            <p class="price">${{ item.precio }}</p>
+                            <a href="{% url 'comprar_frontend' %}?artista={{ item.artista.nombre_artista|urlencode }}&producto={{ item.nombre_producto|urlencode }}" class="buy-btn">Ver</a>
                         </div>
                     {% endfor %}
                 </div>
             {% endif %}
 
             {% if cassettes %}
-                <h3 class="category-title">Casetes</h3>
+                <h3 class="category-title">📼 Casetes</h3>
                 <div class="comprar-sections">
                     {% for item in cassettes %}
                         <div class="comprar-card">
-                            <img src="{% static item.img %}" alt="{{ item.nombre_producto }}"> {# Asume que `item.img` es un path estático #}
+                            {% if item.img %}
+                                <img src="{{ item.img.url }}" alt="{{ item.nombre_producto }}">
+                            {% else %}
+                                <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #ff66cc, #c51a8d); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px;">📼</div>
+                            {% endif %}
                             <h3>{{ item.nombre_producto }}</h3>
-                             <p>Artista: {{ item.artista.nombre_artista }}</p>
-                            <p class="price">MXN ${{ item.precio }}</p>
-                            <a href="{% url 'finalizar_frontend' %}?artista={{ item.artista.nombre_artista|urlencode }}&producto={{ item.nombre_producto|urlencode }}&precio={{ item.precio }}" class="buy-btn">Comprar</a>
+                            <p style="font-weight: 600;">{{ item.artista.nombre_artista }}</p>
+                            <p class="price">${{ item.precio }}</p>
+                            <a href="{% url 'comprar_frontend' %}?artista={{ item.artista.nombre_artista|urlencode }}&producto={{ item.nombre_producto|urlencode }}" class="buy-btn">Ver</a>
                         </div>
                     {% endfor %}
                 </div>
             {% endif %}
 
             {% if not vinilos and not cds and not cassettes %}
-                <p style="text-align:center;">No hay productos disponibles para este género.</p>
+                <div class="no-products">
+                    <p>📭 No hay productos disponibles para este género.</p>
+                </div>
             {% endif %}
-        </div>
 
-        <div style="text-align:center;">
-            <a href="{% url 'index_frontend' %}" class="back-link">← Volver al inicio</a>
-        </div>
-    </section>
-</main>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="{% url 'index_frontend' %}" class="back-link">← Volver al inicio</a>
+            </div>
+        </section>
+    </main>
 
-<script>
-const generoMenu = document.getElementById("genero-menu");
-const generoDropdown = document.querySelector(".genero-dropdown");
-
-generoMenu.addEventListener("click", (e) => {
-  e.preventDefault();
-  generoDropdown.classList.toggle("open");
-});
-
-document.addEventListener("click", (e) => {
-  if (!generoDropdown.contains(e.target) && e.target !== generoMenu) {
-    generoDropdown.classList.remove("open");
-  }
-});
-</script>
+    {% include "footer.html" %}
 </body>
 </html>

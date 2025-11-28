@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Actualizar Producto</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body { background: linear-gradient(180deg, #fff0fb 0%, #ffe6f6 100%) !important; color: #2b0030; }
+        .admin-card { background: #fff0fa !important; }
+        form input, form select, form textarea { background: #fff; border: 2px solid #c51a8d; color: #2b0030; padding: 10px; border-radius: 8px; width: 100%; box-sizing: border-box; }
+        form label{ display:block; margin-bottom:6px; font-weight:700; color:#5a005a; }
+        .buttons{ display:flex; gap:12px; margin-top:12px; align-items:center; }
+        h2{ color:#ff66cc; }
+        a{ color:#5a005a; }
+    </style>
+</head>
+<body class="content-with-footer">
+    <div style="padding:20px; max-width:900px; margin:18px auto;">
+        <div class="admin-card">
+            <h2 style="color:#ff66cc; margin-top:0;">Actualizar Producto</h2>
+            <form method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    {{ form.as_p }}
+                </div>
+                <div style="display:flex; gap:12px; margin-top:12px; align-items:center;">
+                    <button type="submit">Actualizar</button>
+                    <a href="{% url 'ver_productos' %}" style="color:#5a005a; font-weight:700;">Cancelar</a>
+                </div>
+            </form>
+            <p style="margin-top:14px;"><a href="{% url 'ver_productos' %}">Volver a productos</a></p>
+        </div>
+    </div>
+    {% include "footer.html" %}
+</body>
+</html>

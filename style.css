@@ -1,8 +1,21 @@
 /* === AXOLOTL MUSIC NAVBAR === */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #000000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #fff0fb 0%, #ffe6f6 100%); /* restored soft pink background */
+    color: #2b0030;
+    padding-bottom: 110px; /* leave room for fixed footer */
+    overflow-x: hidden;
+    width: 100%;
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden;
 }
 
 /* Barra general (más compacta) */
@@ -10,11 +23,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(90deg, #20001f 10%, #5a005a 60%, #3b003b 100%);
-    padding: 6px 22px; /* menos espacio vertical y horizontal */
-    height: 50px; /* ligero ajuste para que el logo respire */
-    border-radius: 0 25px 25px 0;
-    box-shadow: inset 0 -4px 0 0 #ff4db8; /* línea fucsia inferior */
+    background: linear-gradient(90deg, #ffdff3 0%, #ff66cc 60%);
+    padding: 10px 22px;
+    height: 64px;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 /* Logo */
@@ -67,6 +80,33 @@ body {
 .nav-links a:hover {
     color: #ffffff;
     transform: translateY(-1px);
+}
+
+/* Cliente navbar specifics: add user actions and responsive toggle */
+.nav-user {
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.nav-user .avatar{
+    width:34px;height:34px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,102,204,0.2);
+}
+
+.nav-user a.button-like{
+    background: linear-gradient(90deg,#5a005a,#c51a8d);
+    color:#fff;padding:6px 10px;border-radius:20px;text-decoration:none;font-weight:700;font-size:12px;
+}
+
+/* Mobile: collapse nav links into hamburger */
+@media (max-width:760px){
+    .nav-links{display:none}
+    .navbar{padding:8px}
+    .nav-toggle{display:block;color:#fff;font-size:20px;cursor:pointer}
+}
+
+@media (min-width:761px){
+    .nav-toggle{display:none}
 }
 
 /* Empujar elemento específico (NOSOTROS) a la derecha */
@@ -226,6 +266,76 @@ body {
     border: 0;
     font-size: 26px;
     cursor: pointer;
+}
+
+/* Global form controls - unified aesthetic */
+input, textarea, select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid #c51a8d;
+    background: #fff;
+    color: #2b0030;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+textarea { min-height: 110px; resize: vertical; }
+
+button, .btn, input[type="submit"] {
+    background: linear-gradient(90deg,#5a005a,#c51a8d);
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+button:hover, .btn:hover { transform: translateY(-1px); }
+
+.form-row { margin-bottom: 12px; }
+.form-label { display:block; margin-bottom:6px; font-weight:700; color:#5a005a; }
+
+.admin-card {
+    background: #fff0fa; /* soft pink card background to match site aesthetic */
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+
+/* Make standard tables and panels use soft pink instead of stark white */
+table, .panel, .card { background: #fff0fa; }
+
+/* Footer: dark theme, centered and responsive */
+.site-footer {
+    background-color: #0b0b0b;
+    color: #ffffff;
+    text-align: center;
+    padding: 18px 12px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -6px 18px rgba(0,0,0,0.35);
+    z-index: 9999;
+}
+.site-footer .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.site-footer .footer-copy, .site-footer .footer-credit { margin: 0; font-size: 13px; color: #eee; }
+.site-footer .footer-credit { opacity: 0.9; font-size: 12px; }
+
+/* Helper to ensure content doesn't get hidden behind the fixed footer */
+.content-with-footer { padding-bottom: 120px; }
+
+@media (max-width:760px){
+    .site-footer .footer-inner { flex-direction: column; gap:6px; }
 }
 
 

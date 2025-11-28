@@ -1,43 +1,73 @@
-{% extends 'base.html' %}
-
-{% block title %}Ver Artistas{% endblock %}
-
-{% block content %}
-<h2 class="mb-4 text-center" style="color: #4a148c;">Lista de Artistas</h2>
-<div class="table-responsive">
-    <table class="table table-hover table-sm shadow-sm" style="background-color: #ffffff; border-radius: 10px; overflow: hidden;">
-        <thead style="background-color: #d1c4e9; color: #4a148c;">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre del Artista</th>
-                <th scope="col">Descripción</th>
-                <th scope="col" class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for artista in artistas %}
-            <tr>
-                <th scope="row">{{ artista.id }}</th>
-                <td>{{ artista.nombre_artista }}</td>
-                <td>{{ artista.descripcion }}</td>
-                <td class="text-center">
-                    <a href="{% url 'actualizar_artistas' artista.id %}" class="btn btn-editar btn-sm-custom" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="{% url 'borrar_artistas' artista.id %}" class="btn btn-borrar btn-sm-custom" title="Borrar">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4" class="text-center">No hay artistas registrados.</td>
-            </tr>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ver Artistas - Administración</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body { background: #faf7fb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        table { width: 100%; background: white; border-collapse: collapse; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+        th { background: linear-gradient(135deg, #ff66cc 0%, #c51a8d 100%); color: white; padding: 15px; text-align: left; font-weight: 600; }
+        td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f9f9f9; }
+        .btn { padding: 8px 16px; margin: 5px; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn-edit { background: #ff66cc; color: white; }
+        .btn-edit:hover { background: #c51a8d; }
+        .btn-delete { background: #ff4444; color: white; }
+        .btn-delete:hover { background: #dd0000; }
+        .btn-add { background: #44aa44; color: white; padding: 12px 20px; margin-bottom: 20px; }
+        .btn-add:hover { background: #2d7a2d; }
+        .back-link { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #999; color: white; text-decoration: none; border-radius: 6px; transition: 0.3s; }
+        .back-link:hover { background: #666; }
+    </style>
+</head>
+<body class="content-with-footer">
+    <div class="container">
+        <a href="{% url 'inicio_axolotlmusic' %}" class="back-link">← Volver al Panel</a>
+        <h1 style="color: #ff66cc; margin-bottom: 20px;">🎤 Gestión de Artistas</h1>
+        
+        <a href="{% url 'agregar_artistas' %}" class="btn btn-add">+ Agregar Nuevo Artista</a>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding: 15px; margin-bottom: 15px; border-radius: 6px; background: {% if message.tags %}{% if 'error' in message.tags %}#ffcccc{% else %}#ccffcc{% endif %}{% else %}#ccffcc{% endif %}; color: #333;">
+                    {{ message }}
+                </div>
             {% endfor %}
-        </tbody>
-    </table>
-</div>
-<div class="text-center mt-4">
-    <a href="{% url 'agregar_artistas' %}" class="btn btn-primary" style="background-color: #6a1b9a; border-color: #6a1b9a;">Agregar Nuevo Artista</a>
-</div>
-{% endblock %}
+        {% endif %}
+        
+        {% if artistas %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del Artista</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artista in artistas %}
+                        <tr>
+                            <td>#{{ artista.id }}</td>
+                            <td>{{ artista.nombre_artista }}</td>
+                            <td>{{ artista.descripcion|truncatewords:15 }}</td>
+                            <td>
+                                <a href="{% url 'actualizar_artistas' artista.id %}" class="btn btn-edit">Editar</a>
+                                <a href="{% url 'borrar_artistas' artista.id %}" class="btn btn-delete">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div style="background: white; padding: 20px; border-radius: 8px; text-align: center; color: #999;">
+                <p>No hay artistas registrados. <a href="{% url 'agregar_artistas' %}">Crear uno ahora</a></p>
+            </div>
+        {% endif %}
+    </div>
+    {% include "footer.html" %}
+</body>
+</html>

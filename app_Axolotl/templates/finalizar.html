@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Finalizar Compra - AXOLOTL MUSIC</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
         body { background: #ffdff3; color: #2b0030; font-family: Arial, sans-serif; margin: 0; }
         .finalizar-container {
@@ -39,7 +40,7 @@
     </style>
 </head>
 <body>
-<div class="finalizar-container" id="contenedor">
+<div class="finalizar-container content-with-footer" id="contenedor">
     <h2>Finalizar Compra</h2>
     <div class="resumen">
         <p><b>Artista:</b> <span id="res-artista"></span></p>
@@ -134,8 +135,10 @@
 </div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-document.getElementById("res-artista").textContent = params.get("artista") || "—";
+</script>
+    {% include "footer.html" %}
+</body>
+</html>
 document.getElementById("res-producto").textContent = params.get("producto") || "—";
 document.getElementById("res-precio").textContent = params.get("precio") || "—";
 
